@@ -1,22 +1,31 @@
 import React from 'react'
-import *  as Button from '@/components/ui/button'
-const HomePage = () => {
+import { google } from "@ai-sdk/google";
+import { generateText } from "ai";
+import EmbededWallet from '@/components/embeded-wallet';
+const HomePage = async() => {
+	const result = await generateText({
+		model: google("gemini-2.0-flash-exp"),
+		messages: [
+			{
+				role: "user",
+				content: [
+					{
+						type: "text",
+						text: "What is an embedding model",
+					},
+					
+				],
+			},
+		],
+	});
+
+// console.log(result.text);
   return (
 		<div>
 			{" "}
-			<div className="flex flex-col items-center gap-4">
-				<Button.Root variant="neutral" mode="filled">
-					Learn More
-				</Button.Root>
-				<Button.Root variant="neutral" mode="stroke">
-					Learn More
-				</Button.Root>
-				<Button.Root variant="neutral" mode="lighter">
-					Learn More
-				</Button.Root>
-				<Button.Root variant="neutral" mode="ghost">
-					Learn More
-				</Button.Root>
+			<div className="flex bg-green-100 h-screen flex-col p-4 items-center gap-4">
+				home page
+				<EmbededWallet/>
 			</div>
 		</div>
 	);
