@@ -23,14 +23,14 @@ export async function GET(request: Request) {
 					data: datax,
 				};
 
-				axios
-					.request(config)
-					.then((response) => {
-						console.log(JSON.stringify(response.data,null,2));
-					})
-					.catch((error) => {
-						console.log(error);
-					});
+				// axios
+				// 	.request(config)
+				// 	.then((response) => {
+				// 		console.log(JSON.stringify(response.data,null,2));
+				// 	})
+				// 	.catch((error) => {
+				// 		console.log(error);
+				// 	});
 
 		//const timestamp = new Date().getTime();
 		const url = `https://advanced-api-v2.pump.fun/coins/list?sortBy=creationTime`;

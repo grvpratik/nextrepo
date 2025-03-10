@@ -25,6 +25,7 @@ const PumpFunExplore = () => {
 
 	return (
 		<div className="w-full h-full flex flex-col">
+            
 			{data.length > 0 && <CoinList data={data} />}
 		</div>
 	);
