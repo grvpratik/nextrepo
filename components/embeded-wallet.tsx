@@ -7,7 +7,7 @@ async function wallet() {
             // console.log(window.solana)
 			const phantom = await createPhantom({
 				position: Position.bottomRight, // Choose from bottomRight, bottomLeft, topRight, topLeft
-				
+				namespace:"app"
 				
 			});
            
