@@ -16,7 +16,7 @@ const solanaWeb3JsAdapter = new SolanaAdapter({
 });
 
 // 1. Get projectId from https://cloud.reown.com
-const projectId = process.env;
+const projectId = "d593c206db1515e0a5b3a31dbcc16db7";
 console.log(projectId,"id")
 // 2. Create a metadata object - optional
 const metadata = {
@@ -57,12 +57,20 @@ const EmbededWallet = () => {
 	// 	wallet();
 	// }, []);
 	const { open } = useAppKit();
+	
 	return (
 		<div className="relative " id="embeded">
+			<iframe
+				src="https://lens.google.com/uploadbyurl?url=https://pump.mypinata.cloud/ipfs/QmTAQ4RzZxL9vRYJVyPcoP3vWWiotTwrMzcKgzKRELLuqE&igu=1"
+				width="640"
+				height="480"
+			>
+				Your browser does not support <code>iframe</code>s. Please consider
+				using a <a href="http://browsehappy.com/">modern</a> browser.
+			</iframe>
+			
 			<button onClick={() => open()}>Open Connect Modal</button>
-			<button
-				onClick={() => open({ view: "Networks" })}
-			></button>
+			<button onClick={() => open({ view: "Networks" })}></button>
 		</div>
 	);
 };
