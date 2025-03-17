@@ -61,14 +61,14 @@ const EmbededWallet = () => {
 	return (
 		<div className="relative " id="embeded">
 			<iframe
-				src="https://lens.google.com/uploadbyurl?url=https://pump.mypinata.cloud/ipfs/QmTAQ4RzZxL9vRYJVyPcoP3vWWiotTwrMzcKgzKRELLuqE&igu=1"
+				src="https://www.gmgn.cc/kline/sol/ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82?interval=15"
 				width="640"
 				height="480"
 			>
 				Your browser does not support <code>iframe</code>s. Please consider
 				using a <a href="http://browsehappy.com/">modern</a> browser.
 			</iframe>
-			
+
 			<button onClick={() => open()}>Open Connect Modal</button>
 			<button onClick={() => open({ view: "Networks" })}></button>
 		</div>
