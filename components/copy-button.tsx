@@ -8,7 +8,7 @@ import { NpmCommands } from "@/types/unist";
 
 import { Event, trackEvent } from "@/lib/events";
 import { cn } from "@/lib/utils";
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button-x";
 import {
 	DropdownMenu,
 	DropdownMenuContent,

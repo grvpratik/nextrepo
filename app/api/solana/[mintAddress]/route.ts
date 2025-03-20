@@ -341,3 +341,31 @@ async function fetchTokenData(
 
 	return tokenData;
 }
+
+async function getTokenCreatedByWallet(params) {
+	let data = JSON.stringify({
+		query:
+			'query MyQuery {\n  Solana {\n    TokenSupplyUpdates(\n      where: {Transaction: {Result: {Success: true}, Signer: {is: "8uydUdb3DiQijXPDfzwuJCNiqfFQzCzinFDXRFHQQgCB"}}, Instruction: {Program: {Address: {is: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"}, Method: {is: "create"}}}}\n    ) {\n      Block {\n        Time\n      }\n      TokenSupplyUpdate {\n        Amount\n        Currency {\n          Uri\n          UpdateAuthority\n          Symbol\n          Name\n          MintAddress\n          MetadataAddress\n          Fungible\n          Decimals\n        }\n        PostBalance\n      }\n      Transaction {\n        Signature\n        Signer\n      }\n    }\n  }\n}\n',
+		variables: "{}",
+	});
+
+	let config = {
+		method: "post",
+		maxBodyLength: Infinity,
+		url: "https://streaming.bitquery.io/eap",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer undefined",
+		},
+		data: data,
+	};
+
+	axios
+		.request(config)
+		.then((response) => {
+			console.log(JSON.stringify(response.data));
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
