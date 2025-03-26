@@ -2,6 +2,7 @@
 import { fontSans } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
+import { Toaster } from "sonner";
 
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
 				{" "}
 				
 					{children}
-				
+				<Toaster/>
 			</body>
 		</html>
 	);

@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.20",
+    "@ai-sdk/react": "^1.2.2",
     "@mdx-js/esbuild": "^3.0.1",
     "@metaplex-foundation/js": "^0.20.1",
+    "@nanostores/react": "github:ai/react",
     "@phantom/wallet-sdk": "^0.0.23",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-collapsible": "^1.1.0",
@@ -41,6 +43,7 @@
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "sonner": "^2.0.1",
     "tailwind-merge": "^2.6.0",
     "tailwind-variants": "^0.3.1"
   },
