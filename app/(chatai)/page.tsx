@@ -1,4 +1,5 @@
 import ChatInterface from "@/components/ai/chat"
+import EmbededWallet from "@/components/embeded-wallet"
 
 const AiChatPage =()=>{
 return (

@@ -1,78 +1,92 @@
 "use client";
-import React, { useEffect } from "react";
-import { createPhantom, Position } from "@phantom/wallet-sdk";
-import { useAppKit } from "@reown/appkit/react";
-import { createAppKit } from "@reown/appkit/react";
-import { SolanaAdapter } from "@reown/appkit-adapter-solana/react";
-import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
+import React, { useState } from "react";
 import {
-	PhantomWalletAdapter,
-	SolflareWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
+	useAppKit,
+	useAppKitAccount,
+	useAppKitNetwork,
+	useAppKitState,
+	useAppKitTheme,
+	useAppKitEvents,
+	useDisconnect,
+	useWalletInfo,
+} from "@reown/appkit/react";
 
-// 0. Set up Solana Adapter
-const solanaWeb3JsAdapter = new SolanaAdapter({
-	wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-});
+const WalletManager = () => {
+	// Hooks from AppKit
+	const { open, close } = useAppKit();
+	const { address, isConnected, caipAddress, status, embeddedWalletInfo } =
+		useAppKitAccount();
+	const { caipNetwork, caipNetworkId, chainId, switchNetwork } =
+		useAppKitNetwork();
+	const { open: modalOpen, selectedNetworkId } = useAppKitState();
+	const { themeMode, setThemeMode } = useAppKitTheme();
+	const events = useAppKitEvents();
+	const { disconnect } = useDisconnect();
+	const { walletInfo } = useWalletInfo();
+console.log(walletInfo)
+	// Theme toggle
+	const toggleTheme = () => {
+		setThemeMode(themeMode === "dark" ? "light" : "dark");
+	};
 
-// 1. Get projectId from https://cloud.reown.com
-const projectId = "d593c206db1515e0a5b3a31dbcc16db7";
-console.log(projectId,"id")
-// 2. Create a metadata object - optional
-const metadata = {
-	name: "AppKit",
-	description: "AppKit Solana Example",
-	url: "https://example.com", // origin must match your domain & subdomain
-	icons: ["https://avatars.githubusercontent.com/u/179229932"],
-};
+	// Formatted address display
+	const formatAddress = (addr?: string) => {
+		if (!addr) return "Not Connected";
+		return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+	};
 
-// 3. Create modal
-createAppKit({
-	adapters: [solanaWeb3JsAdapter],
-	networks: [solana],
-	metadata: metadata,
-	projectId,
-	features: {
-		email: false,
-		analytics: true,
-		socials: ["google", "x", "discord"],
-	},
-	allWallets: "HIDE", // Optional - defaults to your Cloud configuration
-});
-// // Initialize the Phantom wallet as a popup
-// async function wallet() {
-// 	// console.log(window.solana)
-// 	const phantom = await createPhantom({
-// 		position: Position.bottomRight, // Choose from bottomRight, bottomLeft, topRight, topLeft
-// 		namespace: "app",
-// 	});
-
-// 	phantom.show();
-// }
-// Show the wallet UI
-const EmbededWallet = () => {
-	// useEffect(() => {
-	// 	const isPhantomInstalled = window.phantom?.solana?.isPhantom;
-	// 	console.log(isPhantomInstalled);
-	// 	wallet();
-	// }, []);
-	const { open } = useAppKit();
-	
 	return (
-		<div className="relative " id="embeded">
-			<iframe
-				src="https://www.gmgn.cc/kline/sol/ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82?interval=15"
-				width="640"
-				height="480"
-			>
-				Your browser does not support <code>iframe</code>s. Please consider
-				using a <a href="http://browsehappy.com/">modern</a> browser.
-			</iframe>
+		<div className="w-full max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">
+			<h2 className="text-xl font-semibold mb-4">Wallet Connection</h2>
 
-			<button onClick={() => open()}>Open Connect Modal</button>
-			<button onClick={() => open({ view: "Networks" })}></button>
+			{/* Connection Status */}
+			<div className="mb-4">
+				<p>Connection Status: {status}</p>
+				<p>Address: {formatAddress(address)}</p>
+				{caipNetwork && (
+					<p>
+						Network: {caipNetwork.name} (Chain ID: {chainId})
+					</p>
+				)}
+			</div>
+
+			{/* Wallet Actions */}
+			<div className="space-y-2">
+				{!isConnected ? (
+					<appkit-connect-button/>
+				) : (
+					<>
+						<appkit-button balance="hide"/>
+						{/* <appkit-network-button/> */}
+						<button
+							onClick={disconnect}
+							className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+						>
+							Disconnect
+						</button>
+					</>
+				)}
+			</div>
+
+			{/* Additional Options */}
+			<div className="mt-4">
+				<button
+					onClick={toggleTheme}
+					className="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300"
+				>
+					Toggle {themeMode === "dark" ? "Light" : "Dark"} Mode
+				</button>
+			</div>
+
+			{/* Debugging Information */}
+			{isConnected && embeddedWalletInfo && (
+				<div className="mt-4 text-xs text-gray-600">
+					<p>Wallet Type: {embeddedWalletInfo.accountType}</p>
+					<p>Auth Provider: {embeddedWalletInfo.authProvider}</p>
+				</div>
+			)}
 		</div>
 	);
 };
 
-export default EmbededWallet;
+export default WalletManager;
